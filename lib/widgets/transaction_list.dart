@@ -31,61 +31,46 @@ class TransactionList extends StatelessWidget {
             )
           : ListView.builder(
               itemBuilder: (ctx, index) {
-                return Card(
-                  margin: EdgeInsets.fromLTRB(8, 8, 8, 0),
-                  child: Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(16),
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: Theme.of(context).primaryColorDark),
+                return Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.grey[300])),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        backgroundColor: Colors.grey[400],
+                        child: FittedBox(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
                             child: Text(
-                              DateFormat('HH:mm')
-                                  .format(transactions[index].date),
+                              '\$${transactions[index].price.toStringAsFixed(2)}',
                               style: TextStyle(
-                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Theme.of(context)
-                                      .primaryTextTheme
-                                      .body1
-                                      .color),
+                                  color: Colors.grey[900]),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  transactions[index].title,
-                                  style: TextStyle(
-                                      fontSize: Theme.of(context)
-                                          .textTheme
-                                          .title
-                                          .fontSize,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 4),
-                                  child: Text(
-                                    '\$ ${transactions[index].price.toString()}',
-                                    style: TextStyle(
-                                        fontSize: Theme.of(context)
-                                            .textTheme
-                                            .body1
-                                            .fontSize,
-                                        color: Theme.of(context).disabledColor),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      )),
+                        ),
+                      ),
+                      title: Text(
+                        transactions[index].title,
+                        style:
+                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        '${DateFormat.yMMMd().format(transactions[index].date)}',
+                        style: TextStyle(
+                            fontSize: Theme.of(context).textTheme.body1.fontSize,
+                            color: Theme.of(context).disabledColor),
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
                 );
               },
               itemCount: transactions.length,

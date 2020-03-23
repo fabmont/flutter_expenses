@@ -15,14 +15,11 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Expenses',
       debugShowCheckedModeBanner: false,
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        fontFamily: 'OpenSans',
-      ),
       theme: ThemeData(
         primarySwatch: Colors.indigo,
-        accentColor: Colors.pink,
+        accentColor: Colors.blueAccent,
         fontFamily: 'OpenSans',
+        backgroundColor: Color.fromRGBO(245, 245, 245, 1),
       ),
       home: Home(),
     );
