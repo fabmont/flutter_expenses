@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import '../../models/transactions.dart';
-import '../../models/transactions.dart';
 import '../../widgets/add_transaction_form.dart';
 import '../../widgets/expenses_card.dart';
 import '../../widgets/transaction_list.dart';
@@ -22,7 +21,7 @@ class _HomeState extends State<Home> {
   }
 
   void addNewTransaction(
-      String txtTitle, double txtPrice, DateTime date, int id) {
+      String txtTitle, double txtPrice, DateTime date, String id) {
     final payload =
         Transaction(id: id, title: txtTitle, price: txtPrice, date: date);
 
@@ -31,8 +30,15 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      userTransactions.removeWhere((tx) => tx.id == id);
+    });
+  }
+
   void _openBottomSheetModal(BuildContext ctx) {
     showModalBottomSheet(
+        backgroundColor: Colors.transparent,
         context: ctx,
         builder: (_) {
           return GestureDetector(
@@ -63,6 +69,7 @@ class _HomeState extends State<Home> {
             ExpensesCard(_recentTransactions),
             TransactionList(
               transactions: userTransactions,
+              deleteTransaction: _deleteTransaction,
             ),
           ],
         ),

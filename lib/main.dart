@@ -17,7 +17,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.indigo,
-        accentColor: Colors.blueAccent,
+        accentColor: Colors.pinkAccent,
         fontFamily: 'OpenSans',
         backgroundColor: Color.fromRGBO(245, 245, 245, 1),
       ),

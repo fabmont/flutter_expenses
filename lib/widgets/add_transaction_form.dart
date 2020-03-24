@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AddTransactionForm extends StatefulWidget {
   final Function addNewTransaction;
@@ -10,26 +11,50 @@ class AddTransactionForm extends StatefulWidget {
 }
 
 class _AddTransactionFormState extends State<AddTransactionForm> {
-  final expenseInputController = TextEditingController();
+  final _expenseInputController = TextEditingController();
+  final _priceInputController = TextEditingController();
+  DateTime _selectedDate;
 
-  final priceInputController = TextEditingController();
+  void _dispatchNewTransaction() {
+    final _expenseName = _expenseInputController.text;
+    final _priceValue = double.parse(_priceInputController.text);
 
-  void dispatchNewTransaction() {
-    final expenseName = expenseInputController.text;
-    final priceValue = double.parse(priceInputController.text);
-
-    if (expenseName.isEmpty || priceValue <= 0) {
+    if (_expenseName.isEmpty || _priceValue <= 0 || _selectedDate == null) {
       return;
     }
 
-    widget.addNewTransaction(expenseName, priceValue, DateTime.now(), 321524);
+    widget.addNewTransaction(
+        _expenseName, _priceValue, _selectedDate, _selectedDate.toString());
     Navigator.of(context).pop();
+  }
+
+  void _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+        color: Theme.of(context).backgroundColor,
+      ),
+      padding: EdgeInsets.only(right: 20, top: 30, left: 20),
+      margin: EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         children: <Widget>[
           Container(
@@ -38,7 +63,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
               child: Text('Add new expense',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
           TextField(
-            controller: expenseInputController,
+            controller: _expenseInputController,
             textInputAction: TextInputAction.next,
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
@@ -51,10 +76,10 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
           ),
           Container(margin: EdgeInsets.only(top: 24)),
           TextField(
-            controller: priceInputController,
+            controller: _priceInputController,
             keyboardType: TextInputType.number,
             textInputAction: TextInputAction.done,
-            onSubmitted: (_) => this.dispatchNewTransaction(),
+            onSubmitted: (_) => _dispatchNewTransaction(),
             decoration: InputDecoration(
                 labelText: 'Price',
                 filled: true,
@@ -63,17 +88,38 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                   color: Theme.of(context).primaryColor,
                 )),
           ),
-          Container(margin: EdgeInsets.only(top: 18)),
-          FlatButton(
-              onPressed: () => this.dispatchNewTransaction(),
+          Container(margin: EdgeInsets.only(top: 10)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                  _selectedDate == null
+                      ? 'Choose a date'
+                      : DateFormat.yMMMd().format(_selectedDate),
+                  style: TextStyle(color: Theme.of(context).disabledColor)),
+              FlatButton(
+                onPressed: _showDatePicker,
+                child: Text('PICK A DATE',
+                    style: TextStyle(
+                        color: Theme.of(context).accentColor,
+                        fontWeight: FontWeight.bold)),
+              )
+            ],
+          ),
+          Container(margin: EdgeInsets.only(top: 16)),
+          RaisedButton(
+              color: Theme.of(context).accentColor,
+              onPressed: _dispatchNewTransaction,
               child: Container(
+                padding: EdgeInsets.symmetric(vertical: 8),
                 width: double.infinity,
                 child: Center(
                   child: Text(
                     'ADD TRANSACTION',
                     style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                        fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ))
