@@ -53,24 +53,35 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Personal Expenses',
-          style: TextStyle(fontWeight: FontWeight.w300),
-        ),
+    final appBar = AppBar(
+      centerTitle: true,
+      title: Text(
+        'Personal Expenses',
+        style: TextStyle(fontWeight: FontWeight.w300),
       ),
-      body: Container(
-        color: Theme.of(context).backgroundColor,
+    );
+
+    return Scaffold(
+      appBar: appBar,
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            ExpensesCard(_recentTransactions),
-            TransactionList(
-              transactions: userTransactions,
-              deleteTransaction: _deleteTransaction,
-            ),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.25,
+                child: ExpensesCard(_recentTransactions)),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.75,
+                child: TransactionList(
+                  transactions: userTransactions,
+                  deleteTransaction: _deleteTransaction,
+                )),
           ],
         ),
       ),
