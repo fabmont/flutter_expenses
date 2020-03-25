@@ -1,16 +1,12 @@
-# flutter_expenses
+# Flutter Expenses
+This is a study case app of a simple personal expenses manager.
 
-A new Flutter project.
+## Stack
+- This project was made with Flutter (Dart programming language) and I have implemented local state manager with Stateful Widgets.
+- For the UI language, it uses the Google's Material Design.
 
-## Getting Started
+## Overview
+I started building this project to learn the core concepts and the basics of Dart and Flutter framework.
+I learned how widgets work and how Flutter deal with state changes; how to build custom widgets and how to use state inside Stateful widgets; and how to pass properties between widgets inside the Flutter's widgets tree.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+I'm very confident about Flutter and as a React Native developer, I'm having no big troubles with Dart and Flutter until now.
